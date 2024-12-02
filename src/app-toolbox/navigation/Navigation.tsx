@@ -61,18 +61,16 @@ const Navigation: React.FC = () => {
                 />
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
-                        <Avatar
-                            isBordered
-                            as="button"
-                            className="transition-transform"
-                        />
+                        <Avatar isBordered as="button" className="transition-transform" />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="email">
                             <p className="font-semibold">test@example.com</p>
                         </DropdownItem>
                         <DropdownItem key="profile">
-                            <Link href="/profile">Профіль</Link>
+                            <Link className="text-sm text-foreground size-full" href="/profile">
+                                Профіль
+                            </Link>
                         </DropdownItem>
                         <DropdownItem key="fundraisers">Мої збори</DropdownItem>
                         <DropdownItem key="analytics">Аналітика</DropdownItem>

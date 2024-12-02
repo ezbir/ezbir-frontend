@@ -1,17 +1,11 @@
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Button,
-    Chip,
-} from "@nextui-org/react"
-import { EditIcon, LinkIcon } from "@nextui-org/shared-icons"
+import { Card, CardHeader, CardBody, CardFooter, Button, Chip } from "@nextui-org/react"
+import { LinkIcon } from "@nextui-org/shared-icons"
 import Link from "next/link"
 import EditFundraiser from "@/app-toolbox/fundraiser/EditFundraiser"
 
 //todo Fundraiser.tsx: interface
 interface Fundraiser {
+    id: string
     title: string
     username: string
     amount: string
@@ -24,12 +18,13 @@ interface Fundraiser {
 
 // todo Fundraiser.tsx: dynamic data
 const Fundraiser: React.FC<Fundraiser> = ({
+    id = "1",
     title = "Збір для 3-ої штурмової бригади",
     username = "Програміст Коля",
     amount = 666,
-    link = "monobank.com",
-    description = " Збираю кошти для бригади мого знайомого, вони потребують автомобіль та медикаменти, тому буду вдячний за любі  кошти!!!",
-    labels = ["Військова допомога", "Медикаменти"],
+    link = "https://send.monobank.ua/jar/5JnR5Jqr5w",
+    description = "Збираю кошти для бригади мого знайомого, вони потребують автомобіль та медикаменти, тому буду вдячний за любі  кошти!!!",
+    labels = ["Підтримка військових", "Медичне обладнання"],
     isClosed = false,
     isOwner,
 }) => {
@@ -38,7 +33,7 @@ const Fundraiser: React.FC<Fundraiser> = ({
             <Card className="bg-background border border-foreground-50/10">
                 <CardHeader className="flex justify-between items-center">
                     <Link
-                        href="/fundraisers"
+                        href={`/fundraisers/${id}`}
                         className="flex w-fit items-center justify-between group"
                     >
                         <h3 className="font-bold text-xl w-fit flex flex-row items-center gap-2">
@@ -83,7 +78,11 @@ const Fundraiser: React.FC<Fundraiser> = ({
                 </CardBody>
                 <CardFooter>
                     <Button
+                        as={Link}
+                        href={link}
                         isDisabled={isClosed}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="bg-black text-white dark:bg-white dark:text-black w-full"
                     >
                         Mono

@@ -13,7 +13,7 @@ import {
     Select,
     Textarea,
 } from "@nextui-org/react"
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { categories } from "@/app-toolbox/filter/FilterBlock"
 import { EditIcon } from "@nextui-org/shared-icons"
 import { useForm, Controller } from "react-hook-form"
@@ -24,10 +24,7 @@ interface EditFundraiserProps {
     fundraiser?: Fundraiser
 }
 
-const EditFundraiser: React.FC<EditFundraiserProps> = ({
-    isNew = true,
-    fundraiser,
-}) => {
+const EditFundraiser: React.FC<EditFundraiserProps> = ({ isNew = true, fundraiser }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const {
@@ -44,7 +41,7 @@ const EditFundraiser: React.FC<EditFundraiserProps> = ({
                 amount: fundraiser.amount,
                 link: fundraiser.link,
                 description: fundraiser.description,
-                labels: fundraiser.labels,
+                labels: fundraiser.labels, // Масив лейблів буде передано сюди
             })
         }
     }, [fundraiser, reset])
@@ -57,12 +54,7 @@ const EditFundraiser: React.FC<EditFundraiserProps> = ({
     return (
         <>
             <div className="flex flex-wrap gap-3">
-                <Button
-                    variant="flat"
-                    color="default"
-                    onPress={onOpen}
-                    className="w-full"
-                >
+                <Button variant="flat" color="default" onPress={onOpen} className="w-full">
                     {isNew ? (
                         "Створити збір"
                     ) : (
@@ -82,12 +74,7 @@ const EditFundraiser: React.FC<EditFundraiserProps> = ({
                             name="title"
                             control={control}
                             render={({ field }) => (
-                                <Input
-                                    {...field}
-                                    size="sm"
-                                    label="Назва Збору"
-                                    isInvalid={!!errors.title}
-                                />
+                                <Input {...field} size="sm" label="Назва Збору" isInvalid={!!errors.title} />
                             )}
                         />
                         <Controller
@@ -130,33 +117,42 @@ const EditFundraiser: React.FC<EditFundraiserProps> = ({
                         <Controller
                             name="labels"
                             control={control}
-                            render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    label="Категорії"
-                                    selectionMode="multiple"
-                                    size="sm"
-                                    isInvalid={!!errors.labels}
-                                >
-                                    {categories.map((el) => (
-                                        <SelectItem
-                                            key={el.key}
-                                            value={el.key}
-                                            aria-label={el.label}
-                                        >
-                                            {el.label}
-                                        </SelectItem>
-                                    ))}
-                                </Select>
-                            )}
+                            render={({ field }) => {
+                                const selectedKeys = fundraiser?.labels
+                                    ? fundraiser.labels
+                                          .map((label) => {
+                                              const category = categories.find(
+                                                  (category) => category.label === label
+                                              )
+                                              return category!.key
+                                          })
+                                          .filter(Boolean)
+                                    : []
+                                return (
+                                    <Select
+                                        {...field}
+                                        label="Категорії"
+                                        selectionMode="multiple"
+                                        size="sm"
+                                        isInvalid={!!errors.labels}
+                                        defaultSelectedKeys={selectedKeys!}
+                                        value={field.value || []}
+                                        onChange={(value) => {
+                                            field.onChange(value)
+                                        }}
+                                    >
+                                        {categories.map((el) => (
+                                            <SelectItem key={el.key} value={el.key} aria-label={el.label}>
+                                                {el.label}
+                                            </SelectItem>
+                                        ))}
+                                    </Select>
+                                )
+                            }}
                         />
                     </ModalBody>
                     <ModalFooter>
-                        <Button
-                            color="danger"
-                            variant="light"
-                            onPress={onClose}
-                        >
+                        <Button color="danger" variant="light" onPress={onClose}>
                             Скасувати
                         </Button>
                         <Button variant="light" color="default">
