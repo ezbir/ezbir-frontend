@@ -1,5 +1,6 @@
 import { NextUIProvider } from "@nextui-org/react"
 import Navigation from "@/app-toolbox/navigation/Navigation"
+import Footer from "@/app-toolbox/footer/Footer"
 
 export default function FundraiserLayout({
     children,
@@ -10,7 +11,8 @@ export default function FundraiserLayout({
         <>
             <NextUIProvider>
                 <Navigation />
-                <main>{children}</main>
+                <main className="min-h-screen">{children}</main>
+                <Footer />
             </NextUIProvider>
         </>
     )

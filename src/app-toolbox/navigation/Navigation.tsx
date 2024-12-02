@@ -18,7 +18,7 @@ const Navigation: React.FC = () => {
     return (
         <Navbar isBordered>
             <NavbarContent>
-                <NavbarBrand className="mr-4">
+                <NavbarBrand className="mr-10">
                     <h1 className="hidden sm:block font-bold text-inherit text-2xl">
                         <span className="bg-black text-white dark:bg-white dark:text-black px-2 py-1 rounded-md">
                             Є
@@ -26,7 +26,12 @@ const Navigation: React.FC = () => {
                         ЗБІР
                     </h1>
                 </NavbarBrand>
-                <NavbarContent className="hidden sm:flex gap-10">
+                <NavbarContent className="flex gap-10 ml-10">
+                    <NavbarItem>
+                        <Link color="foreground" href="/home">
+                            Головна
+                        </Link>
+                    </NavbarItem>
                     <NavbarItem>
                         <Link color="foreground" href="/fundraisers">
                             Збори
@@ -46,19 +51,6 @@ const Navigation: React.FC = () => {
             </NavbarContent>
 
             <NavbarContent as="div" className="items-center" justify="end">
-                <Input
-                    classNames={{
-                        base: "max-w-full sm:max-w-[10rem] h-10",
-                        mainWrapper: "h-full",
-                        input: "text-small",
-                        inputWrapper:
-                            "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                    }}
-                    placeholder="Пошук"
-                    size="sm"
-                    startContent={<SearchIcon />}
-                    type="search"
-                />
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <Avatar isBordered as="button" className="transition-transform" />

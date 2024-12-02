@@ -2,7 +2,7 @@ import { NextUIProvider } from "@nextui-org/react"
 import Navigation from "@/app-toolbox/navigation/Navigation"
 import Footer from "@/app-toolbox/footer/Footer"
 
-export default function ProfileLayout({
+export default function HomeLayout({
     children,
 }: Readonly<{
     children: React.ReactNode
